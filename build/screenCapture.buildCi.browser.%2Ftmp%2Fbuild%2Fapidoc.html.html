@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/contra/gulp-concat#readme"
-
-    >gulp-concat (v2.6.1)</a>
+    <a href="https://github.com/contra/gulp-concat#readme">gulp-concat (v2.6.1)</a>
 </h1>
 <h4>Concatenates files</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-concat">module gulp-concat</a><ol>
 
@@ -87,13 +80,13 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">gulp-concat = function (file, opt) {
   if (!file) {
-    throw new Error(&#x27;gulp-concat: Missing file option&#x27;);
+    throw new Error('gulp-concat: Missing file option');
   }
   opt = opt || {};
 
-  // to preserve existing |undefined| behaviour and to introduce |newLine: &#x22;&#x22;| for binaries
-  if (typeof opt.newLine !== &#x27;string&#x27;) {
-    opt.newLine = &#x27;\n&#x27;;
+  // to preserve existing |undefined| behaviour and to introduce |newLine: ""| for binaries
+  if (typeof opt.newLine !== 'string') {
+    opt.newLine = '\n';
   }
 
   var isUsingSourceMaps = false;
@@ -102,12 +95,12 @@
   var fileName;
   var concat;
 
-  if (typeof file === &#x27;string&#x27;) {
+  if (typeof file === 'string') {
     fileName = file;
-  } else if (typeof file.path === &#x27;string&#x27;) {
+  } else if (typeof file.path === 'string') {
     fileName = path.basename(file.path);
   } else {
-    throw new Error(&#x27;gulp-concat: Missing path in file options&#x27;);
+    throw new Error('gulp-concat: Missing path in file options');
   }
 
   function bufferContents(file, enc, cb) {
@@ -117,24 +110,24 @@
       return;
     }
 
-    // we don&#x27;t do streams (yet)
+    // we don't do streams (yet)
     if (file.isStream()) {
-      this.emit(&#x27;error&#x27;, new Error(&#x27;gulp-concat: Streaming not supported&#x27;));
+      this.emit('error', new Error('gulp-concat: Streaming not supported'));
       cb();
       return;
     }
 
     // enable sourcemap support for concat
     // if a sourcemap initialized file comes in
-    if (file.sourceMap &#x26;&#x26; isUsingSourceMaps === false) {
+    if (file.sourceMap &amp;&amp; isUsingSourceMaps === false) {
       isUsingSourceMaps = true;
     }
 
     // set latest file if not already set,
     // or if the current file was modified more recently.
-    if (!latestMod || file.stat &#x26;&#x26; file.stat.mtime &#x3e; latestMod) {
+    if (!latestMod || file.stat &amp;&amp; file.stat.mtime &gt; latestMod) {
       latestFile = file;
-      latestMod = file.stat &#x26;&#x26; file.stat.mtime;
+      latestMod = file.stat &amp;&amp; file.stat.mtime;
     }
 
     // construct concat instance
@@ -158,7 +151,7 @@
 
     // if file opt was a file path
     // clone everything from the latest file
-    if (typeof file === &#x27;string&#x27;) {
+    if (typeof file === 'string') {
       joinedFile = latestFile.clone({contents: false});
       joinedFile.path = path.join(latestFile.base, file);
     } else {
@@ -189,3 +182,4 @@
     ]
 </div>
 </div>
+</body></html>

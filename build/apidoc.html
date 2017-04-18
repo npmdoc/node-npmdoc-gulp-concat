@@ -61,12 +61,125 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-concat">module gulp-concat</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-concat.gulp-concat">
+            function <span class="apidocSignatureSpan"></span>gulp-concat
+            <span class="apidocSignatureSpan">(file, opt)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.gulp-concat" id="apidoc.module.gulp-concat">module gulp-concat</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-concat.gulp-concat" id="apidoc.element.gulp-concat.gulp-concat">
+        function <span class="apidocSignatureSpan"></span>gulp-concat
+        <span class="apidocSignatureSpan">(file, opt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">gulp-concat = function (file, opt) {
+  if (!file) {
+    throw new Error(&#x27;gulp-concat: Missing file option&#x27;);
+  }
+  opt = opt || {};
+
+  // to preserve existing |undefined| behaviour and to introduce |newLine: &#x22;&#x22;| for binaries
+  if (typeof opt.newLine !== &#x27;string&#x27;) {
+    opt.newLine = &#x27;\n&#x27;;
+  }
+
+  var isUsingSourceMaps = false;
+  var latestFile;
+  var latestMod;
+  var fileName;
+  var concat;
+
+  if (typeof file === &#x27;string&#x27;) {
+    fileName = file;
+  } else if (typeof file.path === &#x27;string&#x27;) {
+    fileName = path.basename(file.path);
+  } else {
+    throw new Error(&#x27;gulp-concat: Missing path in file options&#x27;);
+  }
+
+  function bufferContents(file, enc, cb) {
+    // ignore empty files
+    if (file.isNull()) {
+      cb();
+      return;
+    }
+
+    // we don&#x27;t do streams (yet)
+    if (file.isStream()) {
+      this.emit(&#x27;error&#x27;, new Error(&#x27;gulp-concat: Streaming not supported&#x27;));
+      cb();
+      return;
+    }
+
+    // enable sourcemap support for concat
+    // if a sourcemap initialized file comes in
+    if (file.sourceMap &#x26;&#x26; isUsingSourceMaps === false) {
+      isUsingSourceMaps = true;
+    }
+
+    // set latest file if not already set,
+    // or if the current file was modified more recently.
+    if (!latestMod || file.stat &#x26;&#x26; file.stat.mtime &#x3e; latestMod) {
+      latestFile = file;
+      latestMod = file.stat &#x26;&#x26; file.stat.mtime;
+    }
+
+    // construct concat instance
+    if (!concat) {
+      concat = new Concat(isUsingSourceMaps, fileName, opt.newLine);
+    }
+
+    // add file to concat instance
+    concat.add(file.relative, file.contents, file.sourceMap);
+    cb();
+  }
+
+  function endStream(cb) {
+    // no files passed in, no file goes out
+    if (!latestFile || !concat) {
+      cb();
+      return;
+    }
+
+    var joinedFile;
+
+    // if file opt was a file path
+    // clone everything from the latest file
+    if (typeof file === &#x27;string&#x27;) {
+      joinedFile = latestFile.clone({contents: false});
+      joinedFile.path = path.join(latestFile.base, file);
+    } else {
+      joinedFile = new File(file);
+    }
+
+    joinedFile.contents = concat.content;
+
+    if (concat.sourceMapping) {
+      joinedFile.sourceMap = JSON.parse(concat.sourceMap);
+    }
+
+    this.push(joinedFile);
+    cb();
+  }
+
+  return through.obj(bufferContents, endStream);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 
