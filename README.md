@@ -1,6 +1,6 @@
 # npmdoc-gulp-concat
 
-#### api documentation for  [gulp-concat (v2.6.1)](https://github.com/contra/gulp-concat#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-concat.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-concat) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-concat)
+#### basic api documentation for  [gulp-concat (v2.6.1)](https://github.com/contra/gulp-concat#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-concat.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-concat) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-concat)
 
 #### Concatenates files
 
@@ -79,7 +79,8 @@
         "coverage": "istanbul cover _mocha",
         "test": "mocha"
     },
-    "version": "2.6.1"
+    "version": "2.6.1",
+    "bin": {}
 }
 ```
 
